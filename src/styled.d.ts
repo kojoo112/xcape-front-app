@@ -2,14 +2,14 @@ import "styled-components";
 
 declare module "styled-components" {
     export interface DefaultTheme {
-        merchats: {
+        merchants: {
             onBgColor: string;
             onColor: string;
             offBgColor: string;
             offColor: string;
         };
         ku: {
-            bgcolor: string; // #000000
+            bgColor: string; // #000000
             color: string; // #9C8871
             theme: {
                 themeIndex: string; // #BFA88E

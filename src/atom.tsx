@@ -21,7 +21,8 @@ export const merchant = atom<IMerchant>({
         businessIcon: "",
         brandInfoNotionId: "",
         usingInfoNotionId: "",
-        addressNotionId: "",
+        addressInfoNotionId: "",
+        useYn: false,
     },
     effects_UNSTABLE: [persistAtom],
 });
@@ -48,7 +49,7 @@ export const themeList = atom<ITheme[]>({
             colorCode: "",
             hasXKit: false,
             isCrimeScene: false,
-            useYN: "N",
+            useYn: "N",
             priceList: [],
             abilityList: [],
         },
@@ -86,7 +87,7 @@ export const theme = atom<ITheme>({
         colorCode: "",
         hasXKit: false,
         isCrimeScene: false,
-        useYN: "N",
+        useYn: "N",
         priceList: [],
         abilityList: [],
     },
@@ -117,4 +118,22 @@ export const bannerList = atom<IBanner[]>({
             useYn: false,
         },
     ],
+});
+
+export const merchantListCdn = atom<IMerchant[]>({
+    key: "merchantListCdn",
+    default: [],
+    effects_UNSTABLE: [persistAtom],
+});
+
+export const themeListCdn = atom<ITheme[]>({
+    key: "themeListCdn",
+    default: [],
+    effects_UNSTABLE: [persistAtom],
+});
+
+export const bannerListCdn = atom<IBanner[]>({
+    key: "bannerListCdn",
+    default: [],
+    effects_UNSTABLE: [persistAtom],
 });

@@ -60,7 +60,7 @@ function Xcape() {
                 </div>
             ) : activeTabIndex === 2 ? (
                 <div>
-                    <NotionView pageId={currentMerchant.addressNotionId} />
+                    <NotionView pageId={currentMerchant.addressInfoNotionId} />
                 </div>
             ) : null}
         </div>

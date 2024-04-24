@@ -3,6 +3,7 @@ import axios from "axios";
 
 const BASE_URL = process.env.REACT_APP_API_HOST;
 const BASE_NODE_SERVER_URL = process.env.REACT_APP_NODE_SERVER_HOST;
+const BASE_CDN_HOST_URL = process.env.REACT_APP_CDN_HOST;
 
 export interface IMerchant {
     id: number;
@@ -19,7 +20,8 @@ export interface IMerchant {
     businessIcon: string;
     brandInfoNotionId: string;
     usingInfoNotionId: string;
-    addressNotionId: string;
+    addressInfoNotionId: string;
+    useYn: boolean;
 }
 
 // export interface IReservation {
@@ -82,7 +84,7 @@ export interface ITheme {
     colorCode: string;
     hasXKit: boolean;
     isCrimeScene: boolean;
-    useYN: string;
+    useYn: string;
     priceList: IPrice[];
     abilityList: IAbility[];
 }
@@ -239,4 +241,16 @@ export function fetchReservationAuthenticatePhoneNumber(formData: { reservationI
             },
         })
         .then((res) => res.data);
+}
+
+export async function getMerchantListFromCdn() {
+    return axios.get(`${BASE_CDN_HOST_URL}/json/merchant/release.json`).then((res) => res.data);
+}
+
+export async function getThemeListFromCdn() {
+    return axios.get(`${BASE_CDN_HOST_URL}/json/theme/release.json`).then((res) => res.data);
+}
+
+export async function getBannerListFromCdn() {
+    return axios.get(`${BASE_CDN_HOST_URL}/json/banner/release.json`).then((res) => res.data);
 }
