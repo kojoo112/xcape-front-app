@@ -18,8 +18,6 @@ function ThemeDetail() {
 
     useEffect(() => {
         const currentTheme = currentThemeList.find((theme) => theme.id === Number(themeId));
-        console.log(currentThemeList);
-        console.log(currentTheme);
         setCurrentTheme(currentTheme);
     }, [themeId]);
 
@@ -28,7 +26,7 @@ function ThemeDetail() {
             {currentTheme && (
                 <>
                     <img src={currentTheme.bgImagePath} alt="bgImagePath" className="w-full" />
-                    {currentTheme.youtubeLink != "" ? (
+                    {currentTheme.youtubeLink && currentTheme.youtubeLink.startsWith("https://") ? (
                         <div>
                             <iframe
                                 className="w-full aspect-video"
@@ -54,7 +52,9 @@ function ThemeDetail() {
                         >
                             {currentTheme.nameKo}
                         </div>
-                        <div className="text-xl text-zinc-300 drop-shadow-lg info-text-regular">{currentTheme.nameEn}</div>
+                        <div className="text-xl text-zinc-300 drop-shadow-lg info-text-regular">
+                            {currentTheme.nameEn}
+                        </div>
                         <div className="w-full mt-8 py-5 text-center text-white whitespace-pre-wrap drop-shadow-md info-text-regular">
                             {currentTheme.description}
                         </div>
@@ -119,9 +119,11 @@ function ThemeDetail() {
                                 );
                             })}
                         </div>
-                        <div className="text-white p-4 border border-white mb-3 drop-shadow-lg info-text-regular">
-                            POINT <span className="text-lg">|</span> {currentTheme.point}
-                        </div>
+                        {currentTheme.point && (
+                            <div className="text-white p-4 border border-white mb-3 drop-shadow-lg info-text-regular">
+                                POINT <span className="text-lg">|</span> {currentTheme.point}
+                            </div>
+                        )}
                         <div
                             onClick={() => {
                                 navigate(`/${merchantCode}/reservation`);

@@ -1,14 +1,15 @@
-import { Link, useParams } from "react-router-dom";
-import { useSetRecoilState } from "recoil";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { IBanner, IMerchant, ITheme } from "../api";
-import { bannerList, merchant, themeList } from "../atom";
+import { bannerList, bannerListCdn, merchant, merchantListCdn, themeList, themeListCdn } from "../atom";
 import { useEffect } from "react";
 
 function Nav() {
+    const navigate = useNavigate();
     const { merchantCode } = useParams<{ merchantCode: string }>();
-    const merchantListJson: IMerchant[] = require("../data/merchantList.json");
-    const themeListJson: ITheme[] = require("../data/themeList.json");
-    const bannerListJson: IBanner[] = require("../data/bannerList.json");
+    const merchantListJson = useRecoilValue<IMerchant[]>(merchantListCdn);
+    const themeListJson = useRecoilValue<ITheme[]>(themeListCdn);
+    const bannerListJson = useRecoilValue<IBanner[]>(bannerListCdn);
     const setCurrentMerchant = useSetRecoilState<IMerchant>(merchant);
     const setCurrentThemeList = useSetRecoilState<ITheme[]>(themeList);
     const setCurrentBannerList = useSetRecoilState<IBanner[]>(bannerList);
@@ -24,7 +25,7 @@ function Nav() {
     };
 
     const findThemesByMerchantId = (merchantId: number): ITheme[] => {
-        return themeListJson.filter((theme: ITheme) => theme.merchantId === merchantId);
+        return themeListJson.filter((theme: ITheme) => theme.merchantId === merchantId && theme.useYn);
     };
 
     const findBannersByMerchantId = (merchantId: number): IBanner[] => {
@@ -32,6 +33,11 @@ function Nav() {
     };
 
     useEffect(() => {
+        if (merchantListJson.length === 0) {
+            navigate("/");
+            return;
+        }
+
         if (merchantCode) {
             const currentMerchant = findMerchantByCode(merchantCode);
             setCurrentMerchant(currentMerchant);
@@ -47,15 +53,17 @@ function Nav() {
     return (
         <div className="inline-block text-center whitespace-nowrap py-6 border-b border-zinc-500 w-full overflow-x-auto">
             {merchantListJson &&
-                merchantListJson.map((merchant, index) => {
-                    return (
-                        <Link to={"/" + merchant.code} key={merchant.id}>
-                            <button className={highlightActiveLink(merchantCode! === merchant.code)} key={index}>
-                                {merchant.name}
-                            </button>
-                        </Link>
-                    );
-                })}
+                merchantListJson
+                    .filter((merchant) => merchant.useYn)
+                    .map((merchant, index) => {
+                        return (
+                            <Link to={"/" + merchant.code} key={merchant.id}>
+                                <button className={highlightActiveLink(merchantCode! === merchant.code)} key={index}>
+                                    {merchant.name}
+                                </button>
+                            </Link>
+                        );
+                    })}
             <Link to={"http://xcapehd.co.kr/"} key={"hd"}>
                 <button className={highlightActiveLink(false)}>홍대점</button>
             </Link>
