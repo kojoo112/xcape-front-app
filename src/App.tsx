@@ -1,14 +1,24 @@
 import Nav from "./components/Nav";
 import { Outlet } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
-import { getBannerListFromCdn, getMerchantListFromCdn, getThemeListFromCdn, IBanner, IMerchant, ITheme } from "./api";
-import { bannerListCdn, merchantListCdn, themeListCdn } from "./atom";
+import {
+    getAbilityListFromCdn,
+    getBannerListFromCdn,
+    getMerchantListFromCdn,
+    getThemeListFromCdn,
+    IAbility,
+    IBanner,
+    IMerchant,
+    ITheme,
+} from "./api";
+import { abilityListCdn, bannerListCdn, merchantListCdn, themeListCdn } from "./atom";
 import { useEffect } from "react";
 
 function App() {
     const setMerchantListJson = useSetRecoilState<IMerchant[]>(merchantListCdn);
     const setThemeListJson = useSetRecoilState<ITheme[]>(themeListCdn);
     const setBannerListJson = useSetRecoilState<IBanner[]>(bannerListCdn);
+    const setAbilityListJson = useSetRecoilState<IAbility[]>(abilityListCdn);
 
     useEffect(() => {
         getMerchantListFromCdn()
@@ -22,6 +32,10 @@ function App() {
             })
             .then((bannerList) => {
                 setBannerListJson(bannerList);
+                return getAbilityListFromCdn();
+            })
+            .then((abilityList) => {
+                setAbilityListJson(abilityList);
             });
     }, []);
 

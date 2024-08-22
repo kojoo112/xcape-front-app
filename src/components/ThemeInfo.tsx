@@ -2,6 +2,8 @@ import { formatNumber, makeAbilityBooleanArray } from "../util/util";
 import { Link } from "react-router-dom";
 import { IAbility, ITheme } from "../api";
 import React from "react";
+import { useRecoilValue } from "recoil";
+import { abilityListCdn } from "../atom";
 
 type ThemeProps = {
     theme: ITheme;
@@ -10,7 +12,7 @@ type ThemeProps = {
 };
 
 function ThemeInfo({ theme, index, color }: ThemeProps) {
-    const abilityListJson: IAbility[] = require("../data/abilityList.json");
+    const abilityListJson: IAbility[] = useRecoilValue(abilityListCdn);
 
     const findAbilitiesByThemeId = (themeId: number): IAbility[] => {
         return abilityListJson.filter((ability: IAbility) => ability.themeId === themeId);

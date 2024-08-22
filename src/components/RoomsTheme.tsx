@@ -3,6 +3,8 @@ import { makeAbilityBooleanArray, makeDifficultyBooleanArray } from "../util/uti
 import Icon from "../assets/icons";
 import { IAbility, ITheme } from "../api";
 import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { abilityListCdn } from "../atom";
 
 interface IProps {
     themeList: ITheme[];
@@ -12,7 +14,7 @@ interface IProps {
 function RoomsTheme({ themeList, merchantCode }: IProps) {
     const navigate = useNavigate();
 
-    const abilityListJson: IAbility[] = require("../data/abilityList.json");
+    const abilityListJson: IAbility[] = useRecoilValue(abilityListCdn);
 
     const findAbilitiesByThemeId = (themeId: number): IAbility[] => {
         return abilityListJson.filter((ability: IAbility) => ability.themeId === themeId);
@@ -112,7 +114,7 @@ function RoomsTheme({ themeList, merchantCode }: IProps) {
                                                 return (
                                                     <div key={ability.id} className="text-xs lg:text-base flex">
                                                         <div className="ml-1">{ability.name}</div>
-                                                        <div className="flex items-center justify-between w-2/3 sm:w-1/2 ml-1">
+                                                        <div className="flex items-center justify-center gap-2 w-2/3 sm:w-1/2 ml-1">
                                                             {makeAbilityBooleanArray(ability.value).map(
                                                                 (item, index) => {
                                                                     if (item) {
