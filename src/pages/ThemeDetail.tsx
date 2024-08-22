@@ -4,7 +4,7 @@ import Icon from "../assets/icons";
 import { IAbility, ITheme } from "../api";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { themeList } from "../atom";
+import { abilityListCdn, themeList } from "../atom";
 
 function ThemeDetail() {
     const navigate = useNavigate();
@@ -13,7 +13,7 @@ function ThemeDetail() {
     const currentThemeList = useRecoilValue<ITheme[]>(themeList);
     const [currentTheme, setCurrentTheme] = useState<ITheme>();
 
-    const abilityList: IAbility[] = require("../data/abilityList.json");
+    const abilityList: IAbility[] = useRecoilValue(abilityListCdn);
     const abilityListByThemeId = abilityList.filter((ability) => ability.themeId === Number(themeId));
 
     useEffect(() => {

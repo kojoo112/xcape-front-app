@@ -137,3 +137,9 @@ export const bannerListCdn = atom<IBanner[]>({
     default: [],
     effects_UNSTABLE: [persistAtom],
 });
+
+export const abilityListCdn = atom<IAbility[]>({
+    key: "abilityListCdn",
+    default: [],
+    effects_UNSTABLE: [persistAtom],
+});
