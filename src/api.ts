@@ -254,3 +254,7 @@ export async function getThemeListFromCdn() {
 export async function getBannerListFromCdn() {
     return axios.get(`${BASE_CDN_HOST_URL}/json/banner/release.json`).then((res) => res.data);
 }
+
+export async function getAbilityListFromCdn() {
+    return axios.get(`${BASE_CDN_HOST_URL}/json/ability/release.json`).then((res) => res.data);
+}

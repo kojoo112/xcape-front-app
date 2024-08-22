@@ -1,4 +1,4 @@
-import { formatNumber, makeBooleanArray } from "../util/util";
+import { formatNumber, makeAbilityBooleanArray } from "../util/util";
 import { Link } from "react-router-dom";
 import { IAbility, ITheme } from "../api";
 import React from "react";
@@ -23,12 +23,12 @@ function ThemeInfo({ theme, index, color }: ThemeProps) {
                 </span>
                 <span style={{ color: color }} className="text-lg font-semibold text-white whitespace-nowrap">
                     {theme.nameKo}&nbsp;
-                  <span
-                      style={{ backgroundColor: theme.colorCode }}
-                      className="px-2 py-1 text-sm whitespace-nowrap text-black text-lg"
-                  >
-                    {theme.runningTime}분
-                  </span>
+                    <span
+                        style={{ backgroundColor: theme.colorCode }}
+                        className="px-2 py-1 text-sm whitespace-nowrap text-black text-lg"
+                    >
+                        {theme.runningTime}분
+                    </span>
                     <div className="text-zinc-400 text-sm whitespace-nowrap">{theme.nameEn}</div>
                 </span>
             </div>
@@ -37,10 +37,7 @@ function ThemeInfo({ theme, index, color }: ThemeProps) {
                     <img src={theme.mainImagePath!} alt="없음" className="w-full h-full object-contain" />
                 </Link>
             </div>
-            <div
-                style={{ backgroundColor: color }}
-                className="text-black text-lg font-bold text-center py-1"
-            >
+            <div style={{ backgroundColor: color }} className="text-black text-lg font-bold text-center py-1">
                 {theme.genre}
             </div>
             <div style={{ backgroundColor: color }} className="my-2 grid grid-cols-2 p-1 whitespace-nowrap">
@@ -49,7 +46,7 @@ function ThemeInfo({ theme, index, color }: ThemeProps) {
                         <div key={ability.id} className="text-xs lg:text-base flex px-1">
                             <div className="ml-1 grow-0">{ability.name}</div>
                             <div className="ml-px flex items-center justify-between gap-x-px grow">
-                                {makeBooleanArray(ability.value).map((item, index) => {
+                                {makeAbilityBooleanArray(ability.value).map((item, index) => {
                                     if (item) {
                                         return <div key={index} className="h-2 w-2 bg-black rounded-full"></div>;
                                     }
