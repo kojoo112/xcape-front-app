@@ -1,5 +1,5 @@
 import React from "react";
-import { makeBooleanArray } from "../util/util";
+import { makeAbilityBooleanArray, makeDifficultyBooleanArray } from "../util/util";
 import Icon from "../assets/icons";
 import { IAbility, ITheme } from "../api";
 import { useNavigate } from "react-router-dom";
@@ -38,7 +38,7 @@ function RoomsTheme({ themeList, merchantCode }: IProps) {
                                     <div className="w-[150px]">
                                         <img src={theme.mainImagePath} alt="mainImage" className="w-[150px]" />
                                         <div className="flex">
-                                            {makeBooleanArray(theme.difficulty).map((star, index) => {
+                                            {makeDifficultyBooleanArray(theme.difficulty).map((star, index) => {
                                                 if (star) {
                                                     return (
                                                         <Icon.Star
@@ -59,9 +59,7 @@ function RoomsTheme({ themeList, merchantCode }: IProps) {
                                     </div>
                                     <div className="ml-2 sm:ml-3 w-full flex flex-col justify-around">
                                         <div className="text-xl text-white whitespace-nowrap flex justify-between items-center">
-                                            <div className="justify-between">
-                                                {theme.nameKo}
-                                            </div>
+                                            <div className="justify-between">{theme.nameKo}</div>
                                             <div className="justify-between">
                                                 <span
                                                     style={{ backgroundColor: theme.colorCode }}
@@ -115,22 +113,24 @@ function RoomsTheme({ themeList, merchantCode }: IProps) {
                                                     <div key={ability.id} className="text-xs lg:text-base flex">
                                                         <div className="ml-1">{ability.name}</div>
                                                         <div className="flex items-center justify-between w-2/3 sm:w-1/2 ml-1">
-                                                            {makeBooleanArray(ability.value).map((item, index) => {
-                                                                if (item) {
+                                                            {makeAbilityBooleanArray(ability.value).map(
+                                                                (item, index) => {
+                                                                    if (item) {
+                                                                        return (
+                                                                            <div
+                                                                                key={index}
+                                                                                className="h-2 w-2 bg-black rounded-full"
+                                                                            ></div>
+                                                                        );
+                                                                    }
                                                                     return (
                                                                         <div
                                                                             key={index}
-                                                                            className="h-2 w-2 bg-black rounded-full"
+                                                                            className="h-2 w-2 border border-black bg-transparent rounded-full"
                                                                         ></div>
                                                                     );
                                                                 }
-                                                                return (
-                                                                    <div
-                                                                        key={index}
-                                                                        className="h-2 w-2 border border-black bg-transparent rounded-full"
-                                                                    ></div>
-                                                                );
-                                                            })}
+                                                            )}
                                                         </div>
                                                     </div>
                                                 );

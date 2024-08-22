@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { makeBooleanArray } from "../util/util";
+import { makeAbilityBooleanArray, makeDifficultyBooleanArray } from "../util/util";
 import Icon from "../assets/icons";
 import { IAbility, ITheme } from "../api";
 import { useNavigate, useParams } from "react-router-dom";
@@ -63,7 +63,7 @@ function ThemeDetail() {
                                 <div className="text-xl" style={{ color: currentTheme.colorCode }}>
                                     난이도
                                 </div>
-                                {makeBooleanArray(currentTheme.difficulty).map((star, index) => {
+                                {makeDifficultyBooleanArray(currentTheme.difficulty).map((star, index) => {
                                     if (star) {
                                         return (
                                             <Icon.Star
@@ -90,15 +90,15 @@ function ThemeDetail() {
                             </div>
                         </div>
                         <div
-                            className="grid grid-cols-2 p-3 w-full mb-3 drop-shadow-lg"
+                            className="grid grid-cols-2 py-3 px-6 w-full mb-3 drop-shadow-lg"
                             style={{ backgroundColor: currentTheme.colorCode }}
                         >
                             {abilityListByThemeId.map((ability) => {
                                 return (
                                     <div key={ability.id} className="flex">
                                         <div className="text-sm items-center">{ability.name}</div>
-                                        <div className="flex items-center justify-between w-3/5 mx-2">
-                                            {makeBooleanArray(ability.value).map((item, index) => {
+                                        <div className="flex items-center justify-center w-3/5 mx-2 gap-4">
+                                            {makeAbilityBooleanArray(ability.value).map((item, index) => {
                                                 if (item) {
                                                     return (
                                                         <div

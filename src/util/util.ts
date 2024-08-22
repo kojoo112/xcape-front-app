@@ -26,12 +26,29 @@ export const formatTimeString = (time: number, showMsecs: boolean) => {
     }
 };
 
-export const makeBooleanArray = (number: number): boolean[] => {
+export const makeAbilityBooleanArray = (abilityValue: number): boolean[] => {
     const array: boolean[] = [];
-    for (let i = 0; i < number; i++) {
+
+    abilityValue = abilityValue > 3 ? 3 : abilityValue;
+
+    for (let i = 0; i < abilityValue; i++) {
         array[i] = true;
     }
-    for (let i = number; i < 5; i++) {
+    for (let i = abilityValue; i < 3; i++) {
+        array[i] = false;
+    }
+    return array;
+};
+
+export const makeDifficultyBooleanArray = (difficultyValue: number): boolean[] => {
+    const array: boolean[] = [];
+
+    difficultyValue = difficultyValue > 5 ? 5 : difficultyValue;
+
+    for (let i = 0; i < difficultyValue; i++) {
+        array[i] = true;
+    }
+    for (let i = difficultyValue; i < 5; i++) {
         array[i] = false;
     }
     return array;

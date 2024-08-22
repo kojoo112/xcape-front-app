@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { getReservationList, IPrice, IReservationTheme } from "../api";
 import { useRecoilValue } from "recoil";
-import { makeBooleanArray, onlyNumber, validatePhoneNumber } from "../util/util";
+import { makeDifficultyBooleanArray, onlyNumber, validatePhoneNumber } from "../util/util";
 import Icon from "../assets/icons";
 import Loading from "../components/Loading";
 import { merchant } from "../atom";
@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import Calendar from "react-calendar";
 import "../styles/CustomCalendar.css";
 import moment from "moment";
-import 'moment/locale/ko';
+import "moment/locale/ko";
 import { OPEN_ROOM } from "../util/constant";
 import PossibleReservation from "../components/PossibleReservation";
 
@@ -190,7 +190,7 @@ function Reservation() {
                                 maxDate={new Date(new Date().setDate(new Date().getDate() + 15))}
                             />
                             <div className="font-bold text-black text-xl text-center py-4 mt-4 bg-[#fff200] rounded">
-                                {moment(new Date(date)).locale('ko').format("YYYY년 MMM Do dddd")}
+                                {moment(new Date(date)).locale("ko").format("YYYY년 MMM Do dddd")}
                             </div>
                         </div>
                         {loading ? (
@@ -215,32 +215,37 @@ function Reservation() {
                                                                 {theme.runningTime}분
                                                             </span>
                                                         </div>
-                                                        <div className="text-xs tracking-tight w-max">{theme.themeNameEn}</div>
+                                                        <div className="text-xs tracking-tight w-max">
+                                                            {theme.themeNameEn}
+                                                        </div>
                                                     </div>
                                                     <div>
                                                         <div className="flex items-end">
-                                                            {makeBooleanArray(theme.difficulty).map((star, index) => {
-                                                                if (star) {
+                                                            {makeDifficultyBooleanArray(theme.difficulty).map(
+                                                                (star, index) => {
+                                                                    if (star) {
+                                                                        return (
+                                                                            <Icon.Star
+                                                                                key={index}
+                                                                                style={{
+                                                                                    color: theme.colorCode,
+                                                                                }}
+                                                                                className="h-8 w-8"
+                                                                            />
+                                                                        );
+                                                                    }
                                                                     return (
                                                                         <Icon.Star
                                                                             key={index}
-                                                                            style={{
-                                                                                color: theme.colorCode,
-                                                                            }}
-                                                                            className="h-8 w-8"
+                                                                            className="text-zinc-600 h-8 w-8"
                                                                         />
                                                                     );
                                                                 }
-                                                                return (
-                                                                    <Icon.Star
-                                                                        key={index}
-                                                                        className="text-zinc-600 h-8 w-8"
-                                                                    />
-                                                                );
-                                                            })}
+                                                            )}
                                                         </div>
                                                         <div className="float-right tracking-tight">
-                                                            인원 {theme.minParticipantCount}-{theme.maxParticipantCount}명
+                                                            인원 {theme.minParticipantCount}-{theme.maxParticipantCount}
+                                                            명
                                                         </div>
                                                     </div>
                                                 </div>
