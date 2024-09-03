@@ -7,7 +7,7 @@ import { formatPrice, formatTimeString, onlyNumber } from "../util/util";
 import { GENERAL, OPEN_ROOM, SUCCESS } from "../util/constant";
 import AuthenticationTimer from "./AuthenticationTimer";
 import moment from "moment/moment";
-import 'moment/locale/ko';
+import "moment/locale/ko";
 
 interface IModalProps {
     reservationFormData: IFormData;
@@ -125,8 +125,11 @@ function ReservationModal({ reservationFormData, onOverlayFunction }: IModalProp
 
     const participantDraw = () => {
         const participantSelect = [];
-        const maxParticipant = reservationFormData?.maxParticipantCount;
-        const minParticipant = reservationFormData?.minParticipantCount;
+        const priceList = reservationFormData.priceList;
+        priceList.sort((a, b) => a.person - b.person);
+
+        const maxParticipant = priceList[priceList.length - 1].person;
+        const minParticipant = priceList[0].person;
 
         if (isOpenRoom) {
             const canParticipantCount = reservationFormData.participantCount
@@ -253,7 +256,9 @@ function ReservationModal({ reservationFormData, onOverlayFunction }: IModalProp
                             <div className="text-xs lg:text-md">날짜</div>
                         </div>
                         <input className="bg-inherit hidden" defaultValue={reservationFormData?.curDate} disabled />
-                        <span className="mt-auto mb-auto">{moment(reservationFormData?.curDate).format("YYYY년 MMM Do dddd")}</span>
+                        <span className="mt-auto mb-auto">
+                            {moment(reservationFormData?.curDate).format("YYYY년 MMM Do dddd")}
+                        </span>
                     </div>
                     <div className="flex mb-3">
                         <div className="w-1/3">
@@ -349,18 +354,40 @@ function ReservationModal({ reservationFormData, onOverlayFunction }: IModalProp
                     </div>
                     <div className="block justify-center m-5 p-2 px-7 border rounded-md">
                         <div>
-                            <input className="w-4 h-4 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" id="privacy" type="checkbox" {...register("privacy", { required: true })} />
+                            <input
+                                className="w-4 h-4 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                                id="privacy"
+                                type="checkbox"
+                                {...register("privacy", { required: true })}
+                            />
                             <label className="ml-1" htmlFor={"privacy"}>
                                 아래 내용에 모두 동의합니다.<span className="text-[#fff200] font-bold">(필수)</span>
                             </label>
                         </div>
                         <div className="text-start my-3">
-                            <span className="block text-start text-xs text-[#fff200] font-semibold">* 필수 동의 사항입니다.</span>
+                            <span className="block text-start text-xs text-[#fff200] font-semibold">
+                                * 필수 동의 사항입니다.
+                            </span>
                         </div>
                         <div className="block text-start">
-                            <span className="block mb-3 text-start text-xs">엑스케이프 <span className="font-semibold underline"><a href="https://bimmm.notion.site/bimmm/933f863af2c645b4bbdfdb19be043b08" target="_blank">이용약관</a></span> 동의 내용</span>
-                            <span className="block my-1 text-start text-xs">· 예약이 완료되면 전체 팀원이 약관에 동의한 것으로 확정됩니다.</span>
-                            <span className="block my-1 text-start text-xs">· 게임 참여 후에는 약관내 지침 규정 정책을 따릅니다.</span>
+                            <span className="block mb-3 text-start text-xs">
+                                엑스케이프{" "}
+                                <span className="font-semibold underline">
+                                    <a
+                                        href="https://bimmm.notion.site/bimmm/933f863af2c645b4bbdfdb19be043b08"
+                                        target="_blank"
+                                    >
+                                        이용약관
+                                    </a>
+                                </span>{" "}
+                                동의 내용
+                            </span>
+                            <span className="block my-1 text-start text-xs">
+                                · 예약이 완료되면 전체 팀원이 약관에 동의한 것으로 확정됩니다.
+                            </span>
+                            <span className="block my-1 text-start text-xs">
+                                · 게임 참여 후에는 약관내 지침 규정 정책을 따릅니다.
+                            </span>
                             <span className="block my-1 text-start text-xs">· 개인정보는 안전하게 보호됩니다.</span>
                         </div>
                     </div>
