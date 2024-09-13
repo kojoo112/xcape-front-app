@@ -66,9 +66,6 @@ function Nav() {
                             </Link>
                         );
                     })}
-            <Link to={"http://xcapehd.co.kr/"} key={"hd"}>
-                <button className={highlightActiveLink(false)}>홍대점</button>
-            </Link>
         </div>
     );
 }
