@@ -54,7 +54,6 @@ function Nav() {
         <div className="inline-block text-center whitespace-nowrap py-6 border-b border-zinc-500 w-full overflow-x-auto">
             {merchantListJson &&
                 merchantListJson
-
                     .filter((merchant) => merchant.useYn)
                     .sort((a, b) => a.order - b.order)
                     .map((merchant, index) => {
