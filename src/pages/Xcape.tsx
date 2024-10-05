@@ -41,13 +41,6 @@ function Xcape() {
                 >
                     이용안내
                 </div>
-                <div
-                    className="cursor-pointer"
-                    ref={(el) => (tabsRef.current[2] = el)}
-                    onClick={() => setActiveTabIndex(2)}
-                >
-                    오시는 길
-                </div>
                 <Underline tabUnderlineLeft={tabUnderlineLeft} tabUnderlineWidth={tabUnderlineWidth} />
             </div>
             {activeTabIndex === 0 ? (
@@ -57,10 +50,6 @@ function Xcape() {
             ) : activeTabIndex === 1 ? (
                 <div>
                     <NotionView pageId={currentMerchant.usingInfoNotionId} />
-                </div>
-            ) : activeTabIndex === 2 ? (
-                <div>
-                    <NotionView pageId={currentMerchant.addressInfoNotionId} />
                 </div>
             ) : null}
         </div>
